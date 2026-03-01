@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 final class ProviderLoginRequest
 {
     #[Assert\NotBlank]
-    #[Assert\Choice([Identity::PROVIDER_EMAIL, Identity::PROVIDER_GOOGLE, Identity::PROVIDER_APPLE])]
+    #[Assert\Choice(choices: [Identity::PROVIDER_EMAIL, Identity::PROVIDER_GOOGLE, Identity::PROVIDER_APPLE])]
     public ?string $provider = null;
 
     #[Assert\Email]

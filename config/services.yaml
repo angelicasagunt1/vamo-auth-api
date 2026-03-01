@@ -21,12 +21,13 @@ services:
 
     App\Auth\Application\Sms\SmsSenderInterface: '@App\Auth\Infrastructure\Sms\NullSmsSender'
 
-    App\Auth\Application\Provider\AuthProviderInterface:
-        tags: ['app.auth_provider']
-
     App\Auth\Application\Provider\AuthProviderRegistry:
         arguments:
             $providers: !tagged_iterator app.auth_provider
+
+    _instanceof:
+        App\Auth\Application\Provider\AuthProviderInterface:
+            tags: ['app.auth_provider']
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

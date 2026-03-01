@@ -7,6 +7,7 @@ namespace App\Auth\Application\Provider;
 use App\Auth\Application\Dto\ProviderLoginRequest;
 use App\Auth\Application\Exception\AuthenticationFailed;
 use App\Auth\Application\Security\PasswordHasher;
+use App\Auth\Application\Service\RefreshTokenService;
 use App\Auth\Domain\Entity\Identity;
 use App\Auth\Infrastructure\Doctrine\Repository\IdentityRepository;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUser;
@@ -17,7 +18,8 @@ final class PasswordAuthProvider implements AuthProviderInterface
     public function __construct(
         private readonly IdentityRepository $identityRepository,
         private readonly PasswordHasher $passwordHasher,
-        private readonly JWTTokenManagerInterface $jwtManager
+        private readonly JWTTokenManagerInterface $jwtManager,
+        private readonly RefreshTokenService $refreshTokenService
     ) {
     }
 
@@ -47,8 +49,9 @@ final class PasswordAuthProvider implements AuthProviderInterface
 
         $jwtUser = JWTUser::createFromPayload($identifier, $payload);
         $token = $this->jwtManager->create($jwtUser);
+        $refreshToken = $this->refreshTokenService->issue($identity->getUser(), $identity);
 
-        return ['token' => $token];
+        return ['token' => $token, 'refresh_token' => $refreshToken];
     }
 
     private function resolveIdentifier(ProviderLoginRequest $request): string

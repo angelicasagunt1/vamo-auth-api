@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Auth\Infrastructure\Http\Controller;
 
 use App\Auth\Application\Otp\OtpService;
+use App\Auth\Application\Service\RefreshTokenService;
 use App\Auth\Domain\Entity\Identity;
 use App\Auth\Domain\Entity\User;
 use App\Auth\Infrastructure\Doctrine\Repository\IdentityRepository;
@@ -24,6 +25,7 @@ final class OtpController
         private readonly IdentityRepository $identityRepository,
         private readonly EntityManagerInterface $entityManager,
         private readonly JWTTokenManagerInterface $jwtManager,
+        private readonly RefreshTokenService $refreshTokenService,
         private readonly ValidatorInterface $validator
     ) {
     }
@@ -100,7 +102,8 @@ final class OtpController
 
         $jwtUser = JWTUser::createFromPayload($phone, $payload);
         $token = $this->jwtManager->create($jwtUser);
+        $refreshToken = $this->refreshTokenService->issue($identity->getUser(), $identity);
 
-        return new JsonResponse(['token' => $token]);
+        return new JsonResponse(['token' => $token, 'refresh_token' => $refreshToken]);
     }
 }
