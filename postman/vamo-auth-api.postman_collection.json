@@ -1,0 +1,124 @@
+{
+  "info": {
+    "name": "Vamo Auth API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "OTP Request (Phone)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"phone\": \"+5491123456789\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/auth/otp/request",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "auth",
+            "otp",
+            "request"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "OTP Verify (Phone)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"phone\": \"+5491123456789\",\n  \"code\": \"123456\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/auth/otp/verify",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "auth",
+            "otp",
+            "verify"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login (Google)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"provider\": \"google\",\n  \"token\": \"google-id-token\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/auth/login",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login (Apple)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"provider\": \"apple\",\n  \"token\": \"apple-id-token\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/auth/login",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080"
+    }
+  ]
+}
